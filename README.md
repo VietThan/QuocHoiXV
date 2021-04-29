@@ -14,3 +14,5 @@
 
 ## Data:
 <a href="https://docs.google.com/spreadsheets/d/1IrqaSTp7aswj8DEaQLWqNpd4Vqit1yI2mIbd5_zOhS8/edit?usp=sharing">Google Drive Link</a>
+
+- Will attempt pulling, building data with <a href="https://vapi-vnappmob.readthedocs.io/en/latest/province.html">vAPI-VNAppMobb wards API</a>

@@ -1,4 +1,5 @@
 # QuocHoiXV
+[Live site](https://vietthan.github.io/QuocHoiXV/)
 
 ## Core Features wanted:
 - Search for which congressional unit represent you
@@ -13,9 +14,12 @@
 - Number of site usage
 
 ## Data:
-<a href="https://docs.google.com/spreadsheets/d/1IrqaSTp7aswj8DEaQLWqNpd4Vqit1yI2mIbd5_zOhS8/edit?usp=sharing">Google Drive Link</a>
+[Google Drive Link](https://docs.google.com/spreadsheets/d/1IrqaSTp7aswj8DEaQLWqNpd4Vqit1yI2mIbd5_zOhS8/edit?usp=sharing)
 
-~~- Will attempt pulling, building data with <a href="https://vapi-vnappmob.readthedocs.io/en/latest/province.html">vAPI-VNAppMobb wards API</a>~~ didn't work on my machine, probably work as an API though so who knows
+~~- Will attempt pulling, building data with [vAPI-VNAppMobb wards API](https://vapi-vnappmob.readthedocs.io/en/latest/province.html)~~ 
+~~- didn't work on my machine, probably work as an API though so who knows~~
+    
+- will fold development into child project [VietnamAPI](https://github.com/VietThan/VietnamAPI)
 
 ## Contributor
-Tô Minh Sơn - <a href="https://www.linkedin.com/in/minh-son-to-a61249168/">Link</a>
+Tô Minh Sơn - [LinkedIn](https://www.linkedin.com/in/minh-son-to-a61249168/)

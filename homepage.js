@@ -1,7 +1,12 @@
-const provinceURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/provinces.json';
+
+  const provinceURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/provinces.json';
+  const districtsURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/provinces/districts/'
+  const unitsURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/congress/districts/'
 
 window.onload = function(){
   var provinceSel = document.getElementById("province");
+  var districtSel = document.getElementById("district");
+  var result = document.getElementById("result");
 
   let provincesData
   fetch(provinceURL).then(function (provinceResponse) {
@@ -25,9 +30,7 @@ window.onload = function(){
 
   let districtsData;
   provinceSel.onchange = function () {
-    const districtsURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/provinces/districts/'
     let districtURL = districtsURL + provincesData[this.value] + '.json'
-    console.log(districtURL)
   
     fetch(districtURL).then(function (districtResponse) {
     // The API call was successful!
@@ -37,106 +40,52 @@ window.onload = function(){
       return Promise.reject(districtResponse);
     }
     }).then(function (districtsJson) {
-      var wardSel = document.getElementById("ward");
       // empty result dropdown
-      wardSel.length = 1;
-      wardSel.value = "";
+      districtSel.length = 1;
+      districtSel.value = "";
 
       districtsData = districtsJson;
     
       for (var district in districtsData['dictDistricts']) {
-        wardSel.options[wardSel.options.length] = new Option(district, district);
+        districtSel.options[districtSel.options.length] = new Option(district, district);
       }
     }).catch(function (districtErr) {
       // There was an error
       console.warn('Something went wrong with districts.', districtErr);
     });
+  };
+
+  let resultData;
+  districtSel.onchange = function(){
+    let resultURL = unitsURL + districtsData['dictDistricts'][this.value] + '.json'
+    fetch(resultURL).then(function (unitDistrictResponse) {
+      // The API call was successful!
+      if (unitDistrictResponse.ok) {
+        return unitDistrictResponse.json();
+      } else {
+        return Promise.reject(unitDistrictResponse);
+      }
+      }).then(function (resultJson) {
+        // empty result
+        result.value = "";
+  
+        resultData = resultJson;
+
+        var strProvinceName = resultData['strProvinceName'];
+        strProvinceName = strProvinceName.replace("Tỉnh ", "").replace("TP. ", "")
+        let intProvinceUnitKey = resultData['intProvinceUnitKey'];
+        let intCongressKey = resultData['intCongressKey'];
+        let intRepCount = resultData['intRepCount'];
+    
+
+        result.innerHTML = "Bạn được đại diện bởi đơn vị đại biểu:<br>&emsp;" + strProvinceName + " " 
+        + intProvinceUnitKey + "<br>Đơn vị này có " + intRepCount + " đại biểu"
+        + "<br>Và là đơn vị số " + intCongressKey + " trong danh sách quốc hội";
+      }).catch(function (districtErr) {
+        // There was an error
+        console.warn('Something went wrong with districts.', districtErr);
+      });
+
   }
 
 }
-
-
-
-
-
-/*
-districtsURL = 'https://vietthan.github.io/VietnamAPI/api/vietnam/provinces/districts/';
-  window.onload = function() {
-    let provinceData;
-    fetch(provinceURL).then(function (response) {
-      // The API call was successful!
-      if (response.ok) {
-        return response.json();
-      } else {
-        return Promise.reject(response);
-      }
-    }).then(function (provinceJson) {
-      // This is the JSON from our response
-      provinceData = provinceJson;
-
-      var provinceSel = document.getElementById("province");
-    
-      for (var x in provinceData) {
-        console.log(x)
-        provinceSel.options[provinceSel.options.length] = new Option(x, x);
-      }
-      provinceSel.onchange = function() {
-        var wardSel = document.getElementById("ward");
-            //empty result, and Wards- dropdowns
-           wardSel.length = 1;
-
-        let districtData;
-        let districtURL = districtsURL + provinceData[this.value] + '.json';
-        console.log('district url is')
-        console.log(districtURL)
-        fetch(districtURL).then(function (response) {
-          // The API call was successful!
-          if (response.ok) {
-            return response.json();
-          } else {
-            return Promise.reject(response);
-          }
-        }).then(function (provinceJson) {
-          // This is the JSON from our response
-          provinceData = provinceJson;
-    
-          
-        }).catch(function (err) {
-          // There was an error
-          console.warn('Something went wrong.', err);
-        });
-    
-
-
-            //display correct values
-            for (var y in districtData) {
-              wardSel.options[wardSel.options.length] = new Option(y, y);
-            }
-          }
-    }).catch(function (err) {
-      // There was an error
-      console.warn('Something went wrong.', err);
-    });
-
-
-
-    var provinceSel = document.getElementById("province");
-    var wardSel = document.getElementById("ward");
-    var result = document.getElementById("result");
-  
-    for (var x in provinceData) {
-      console.log(x)
-      provinceSel.options[provinceSel.options.length] = new Option(x, x);
-    }
-  
-
-  //   wardSel.onchange = function() {
-  //     //empty result dropdown
-  //     result.value = "";
-  //     //display correct values
-  //     var z = subjectObject[provinceSel.value][this.value];
-  //     result.innerHTML = "Bạn được đại diện bởi đơn vị đại biểu:<br>&emsp;" + provinceSel.value + " " + z
-  //   }
-  }
-
-  */

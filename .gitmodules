@@ -1,3 +1,3 @@
 [submodule "VietnamAPI"]
 	path = VietnamAPI
-	url = git@github.com:VietThan/VietnamAPI.git
+	url = https://github.com/VietThan/VietnamAPI.git
